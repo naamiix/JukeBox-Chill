@@ -1,0 +1,101 @@
+body
+{
+    background-image: url(pictures/wallpaper.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+.title
+{
+    text-align: center;
+    font-family: 'Patrick Hand', Arial, Helvetica, sans-serif ;
+    font-weight: lighter;
+    font-size: 5vh;
+}
+
+main
+{
+    position: relative;
+    color: gray;
+    height: 100px;
+}
+
+.jukeBox-musicNotesContainer
+{
+    position: absolute;
+    left: 39%;
+    transform: translateY(380%);
+    height: 50%
+}
+
+img.jukeBox
+{
+    height: 600px;
+}
+
+.playButton
+{
+    position: absolute;
+    top: 405px;
+    left: 162px;
+    height: 22px;
+    width: 22px;
+    z-index: 2;
+    background: green;
+    border : 1px solid green;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    opacity: 1;
+
+    will-change: opacity;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
+}
+
+.pauseButton
+{
+    position: absolute;
+    top: 405px;
+    left: 162px;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    opacity: 0;
+}
+
+.windowContainer
+{
+    position: absolute;
+    top: -46px;
+    left: 63.5px;
+}
+
+.windowContainer img.js-songCover
+{
+    width: 259px;
+    height: 408px;
+    object-fit: cover;
+    opacity: 0;
+
+    will-change: opacity;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+}
+
+.vinyleContainer
+{
+    position: absolute;
+}
+
+.horlogeContainer
+{
+    position: absolute;
+}
