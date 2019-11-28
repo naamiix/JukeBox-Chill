@@ -26,8 +26,8 @@ https://naamiix.github.io/jukeBox-chill/
 
 ## Inspirations
 
-- Pinterest for CCS objets
+- Pinterest for designed objects
 - Adobe XD for the web site's design
-- Some Coffee Brands : Starbucks and Nespresso
+- Thanks to Christopher Herbet's design recreated with Adobe Illustrator (https://dribbble.com/shots/1841840-1950-s-Diner)
 
 Enjoy it ! ^^ 
