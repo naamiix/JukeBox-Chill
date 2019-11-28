@@ -22,7 +22,7 @@ There is also some sound effects.
 
 ## Online WebSite
 
-https://naamiix.github.io/coffeeBar/
+https://naamiix.github.io/jukeBox-chill/
 
 ## Inspirations
 
