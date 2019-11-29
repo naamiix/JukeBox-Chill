@@ -6,6 +6,7 @@ class JukeBox
         this.audioElement = this.element.querySelector('.js-audio-music')
         this.soundElement = this.element.querySelector('.js-audio-sound')
         this.songCovers = this.element.querySelectorAll('.js-songCover')
+        this.equalizerElements = this.element.querySelectorAll('.js-bar')
         this.songElements = ["sounds/caravan-palace-lone-digger.mp3", "sounds/caravan-palace-miracle.mp3", "sounds/caravan-palace-dramophone.mp3", "sounds/caravan-palace-plume.mp3", "sounds/caravan-palace-rock-it-for-me.mp3", "sounds/caravan-palace-wonderland.mp3", "sounds/ours-samplus-le-parjure.mp3", "sounds/ours-samplus-like-the-sunshine.mp3", "sounds/ours-samplus-swingapour.mp3", "sounds/ours-samplus-trouble.mp3"]
          
         this.nameSongElement = ["Lone Digger - Caravan Palace", "Miracle - Caravan Palace", "Dramophone - Caravan Palace", "Plume - Caravan Palace", "Rock It For Me - Caravan Palace", "Wonderland - Caravan Palace", "Le Parjure - Ours Samplus", "Like The Sun Shine - Ours Samplus", "Swingapour - Ours Samplus", "Trouble - Ours Samplus"]
@@ -14,7 +15,8 @@ class JukeBox
 
         this.setPlayPause()
         this.changeSong()
-        /*this.setVolume()
+        this.setVolume()
+        /*
         this.setSeekBar()*/
     }
 
@@ -23,13 +25,15 @@ class JukeBox
         this.audioElement.src = this.songElements[this.activeSong]
         //Play
         const playElement = this.element.querySelector('.js-playButton')
-        console.log(playElement)
         playElement.addEventListener('click', () =>
         {
             this.soundElement.play()
             setTimeout(() => 
             {
                 this.audioElement.play()
+                for(const bar of this.equalizerElements){
+                    bar.style.animationPlayState = 'running'
+                }
                 this.songCovers[this.activeSong].style.opacity = 1
                 playElement.style.opacity = 0
                 playElement.style.zIndex = 0
@@ -42,7 +46,9 @@ class JukeBox
         pauseElement.addEventListener('click', () =>
         {
             this.audioElement.pause()
-            console.log(this.audioElement)
+            for(const bar of this.equalizerElements){
+                bar.style.animationPlayState = 'paused'
+            }
             playElement.style.opacity = 1
             playElement.style.zIndex = 2
         })
@@ -111,23 +117,68 @@ class JukeBox
         })
     }
 
-    /*
+    
     setVolume()
     {
-        const volumeUpElement = this.element.querySelector('.js-volume-up')
-        const volumeDownElement = this.element.querySelector('.js-volume-down')
-
-        volumeUpElement.addEventListener('click', () =>
+        const volumeElements = this.element.querySelectorAll('.js-volume')
+        const volumeMuteElement = this.element.querySelector('.js-mute')
+        const volumeMaxElement = this.element.querySelector('.js-max')
+        for (let k = 0; k < volumeElements.length; k++) 
         {
-            this.videoElement.volume =  Math.min(this.videoElement.volume + 0.1, 1)
-        })
+            volumeElements[k].addEventListener('click', ()=>
+            {
+                for (let l = 0; l < k+2; l++) 
+                {
+                    volumeElements[l].classList.add('color-the-selection')
+                }
 
-        volumeDownElement.addEventListener('click', () =>
-        {
-            this.videoElement.volume = Math.max(this.videoElement.volume - 0.1, 0)
-        })
+                for (let m = k+1; m < volumeElements.length; m++) 
+                {
+                    volumeElements[m].classList.remove('color-the-selection')
+                }
+
+                if (k==0)
+                {
+                    this.audioElement.volume = 0.2
+                }
+                else if (k==1)
+                {
+                    this.audioElement.volume = 0.4
+                }
+                else if (k==2)
+                {
+                    this.audioElement.volume = 0.6
+                }
+                else if (k==3)
+                {
+                    this.audioElement.volume = 0.8
+                }
+                else 
+                {
+                    this.audioElement.volume = 1
+                }
+             }) 
+             
+            volumeMuteElement.addEventListener('click', () => 
+            {
+                for(const v_element of volumeElements)
+                {
+                    v_element.classList.remove('color-the-selection')
+                }
+                this.audioElement.volume = 0
+            }) 
+
+            volumeMaxElement.addEventListener('click', () => 
+            {
+                for(const v_element of volumeElements)
+                {
+                    v_element.classList.add('color-the-selection')
+                }
+                this.audioElement.volume = 1
+            })
+        }
     }
-    */
+    
     
     /*
     setSeekBar()
