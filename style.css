@@ -79,6 +79,7 @@ img.jukeBox
 
 .windowContainer img.js-songCover
 {
+    position: absolute;
     width: 259px;
     height: 408px;
     object-fit: cover;
@@ -86,7 +87,7 @@ img.jukeBox
 
     will-change: opacity;
     transition-property: opacity;
-    transition-duration: 1s;
+    transition-duration: 0.8s;
     transition-timing-function: ease-in;
 }
 
@@ -94,6 +95,41 @@ img.jukeBox
 {
     position: absolute;
 }
+
+.vinyleContainer img
+{
+    height: 100px;
+    position: absolute;
+    cursor: pointer;
+    opacity: 1;
+
+    will-change: opacity;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in;
+}
+
+.vinyleContainer .skipbackContainer
+{
+    position: absolute;
+    top : 180px;
+    left : 440px;
+}
+
+.vinyleContainer .skipnextContainer
+{
+    position: absolute;
+    top : 180px;
+    left : 970px;
+}
+
+.skipbackContainer img.skipbackVinyle:hover,
+.skipnextContainer img.skipnextVinyle:hover
+{
+    opacity: 0;
+}
+
+
 
 .horlogeContainer
 {

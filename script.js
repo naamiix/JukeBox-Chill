@@ -5,39 +5,36 @@ class JukeBox
         this.element = _element
         this.audioElement = this.element.querySelector('.js-audio-music')
         this.soundElement = this.element.querySelector('.js-audio-sound')
-        this.songCover = this.element.querySelector('.js-songCover')
+        this.songCovers = this.element.querySelectorAll('.js-songCover')
         this.songElements = ["sounds/caravan-palace-lone-digger.mp3", "sounds/caravan-palace-miracle.mp3", "sounds/caravan-palace-dramophone.mp3", "sounds/caravan-palace-plume.mp3", "sounds/caravan-palace-rock-it-for-me.mp3", "sounds/caravan-palace-wonderland.mp3", "sounds/ours-samplus-le-parjure.mp3", "sounds/ours-samplus-like-the-sunshine.mp3", "sounds/ours-samplus-swingapour.mp3", "sounds/ours-samplus-trouble.mp3"]
-        this.coverElements = ["pictures/loneDigger.jpg", "pictures/miracle.jpg", "pictures/dramophone.jpg", "pictures/plume.jpg", "pictures/rockItForMe.jpg", "pictures/wonderland.jpg", "pictures/leParjure.jpg", "pictures/likeTheSunShine.jpg", "pictures/swingapour.jpg", "pictures/trouble.jpg"]
+         
         this.nameSongElement = ["Lone Digger - Caravan Palace", "Miracle - Caravan Palace", "Dramophone - Caravan Palace", "Plume - Caravan Palace", "Rock It For Me - Caravan Palace", "Wonderland - Caravan Palace", "Le Parjure - Ours Samplus", "Like The Sun Shine - Ours Samplus", "Swingapour - Ours Samplus", "Trouble - Ours Samplus"]
-        this.randomSong = Math.floor(Math.random()*(this.songElements.length - 1))
-        this.nextSong = this.randomSong
+        this.activeSong = Math.floor(Math.random()*(this.songElements.length - 1))
+         
 
         this.setPlayPause()
+        this.changeSong()
         /*this.setVolume()
         this.setSeekBar()*/
     }
 
     setPlayPause()
     {
-        this.audioElement.src = this.songElements[this.randomSong]
+        this.audioElement.src = this.songElements[this.activeSong]
         //Play
         const playElement = this.element.querySelector('.js-playButton')
         console.log(playElement)
         playElement.addEventListener('click', () =>
         {
             this.soundElement.play()
-            this.songCover.src = this.coverElements[this.randomSong]
             setTimeout(() => 
             {
                 this.audioElement.play()
-                this.songCover.style.opacity = 1
+                this.songCovers[this.activeSong].style.opacity = 1
                 playElement.style.opacity = 0
                 playElement.style.zIndex = 0
             }
-                
-            ,1000)
-            
-            
+            ,800)        
         }) 
         
         //Pause
@@ -48,6 +45,69 @@ class JukeBox
             console.log(this.audioElement)
             playElement.style.opacity = 1
             playElement.style.zIndex = 2
+        })
+    }
+
+    changeSong()
+    {
+        //Back Song
+        const backElement = this.element.querySelector('.js-skipbackVinyle')
+        backElement.addEventListener('click', () =>
+        {
+            this.songCovers[this.activeSong].style.opacity = 0
+            if(this.activeSong==0)
+            {
+                this.activeSong = this.songElements.length - 1
+                this.audioElement.src = this.songElements[this.activeSong]
+                this.soundElement.play()
+                setTimeout(() => 
+                {
+                    this.audioElement.play()
+                    this.songCovers[this.activeSong].style.opacity = 1
+                },800)   
+            }
+
+            else 
+            {
+                this.activeSong --
+                this.audioElement.src = this.songElements[this.activeSong]
+                this.soundElement.play()
+                setTimeout(() => 
+                {
+                    this.audioElement.play()
+                    this.songCovers[this.activeSong].style.opacity = 1
+                },800)  
+            }
+        })
+
+        //Next Song
+        const nextElement = this.element.querySelector('.js-skipnextVinyle')
+        nextElement.addEventListener('click', () =>
+        {
+            this.songCovers[this.activeSong].style.opacity = 0
+            if(this.activeSong == this.songElements.length-1)
+            {
+                this.activeSong = 0
+                this.audioElement.src = this.songElements[this.activeSong]
+                this.soundElement.play()
+                setTimeout(() => 
+                {
+                    this.audioElement.play()
+                    this.songCovers[this.activeSong].style.opacity = 1
+                },800)    
+            }
+
+            else
+            {
+                this.activeSong ++
+                this.audioElement.src = this.songElements[this.activeSong]
+                this.soundElement.play()
+                setTimeout(() => 
+                {
+                    this.audioElement.play()
+                    this.songCovers[this.activeSong].style.opacity = 1
+                },800)  
+            }
         })
     }
 
