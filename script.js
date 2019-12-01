@@ -11,23 +11,27 @@ class JukeBox
          
         this.nameSongElement = ["Lone Digger - Caravan Palace", "Miracle - Caravan Palace", "Dramophone - Caravan Palace", "Plume - Caravan Palace", "Rock It For Me - Caravan Palace", "Wonderland - Caravan Palace", "Le Parjure - Ours Samplus", "Like The Sun Shine - Ours Samplus", "Swingapour - Ours Samplus", "Trouble - Ours Samplus"]
         this.activeSong = Math.floor(Math.random()*(this.songElements.length - 1))
+        this.isPlaying = false
          
 
         this.setPlayPause()
         this.changeSong()
         this.setVolume()
-        /*
-        this.setSeekBar()*/
+        this.setSeekBar()
+        
     }
 
     setPlayPause()
     {
+        const instructionsElement = this.element.querySelector('.js-instructionsContainer')
         this.audioElement.src = this.songElements[this.activeSong]
         //Play
         const playElement = this.element.querySelector('.js-playButton')
         playElement.addEventListener('click', () =>
         {
             this.soundElement.play()
+            this.isPlaying = true
+            instructionsElement.style.opacity = 0
             setTimeout(() => 
             {
                 this.audioElement.play()
@@ -38,7 +42,7 @@ class JukeBox
                 playElement.style.opacity = 0
                 playElement.style.zIndex = 0
             }
-            ,800)        
+            ,800)    
         }) 
         
         //Pause
@@ -56,7 +60,7 @@ class JukeBox
 
     changeSong()
     {
-        //Back Song
+        //Previous Song
         const backElement = this.element.querySelector('.js-skipbackVinyle')
         backElement.addEventListener('click', () =>
         {
@@ -180,31 +184,77 @@ class JukeBox
     }
     
     
-    /*
+    
     setSeekBar()
     {
-        const seekBarElement = this.element.querySelector('.js-seek-bar')
-        const fillElement = seekBarElement.querySelector('.js-seek-bar-fill')
-        
-        this.videoElement.addEventListener('timeupdate', () =>
+        const secondsElement = this.element.querySelector('.js-seconds')
+        const seekBarElement = this.element.querySelector('.js-seekBarDragDrop')
+        const dragElement = this.element.querySelector('.js-drag')
+        const currentTElement = this.element.querySelector('.js-currentT')
+        const durationTElement = this.element.querySelector('.js-durationT')
+        const bounding = seekBarElement.getBoundingClientRect()
+        let isdraged = false
+         
+    
+
+        this.audioElement.addEventListener('timeupdate', () =>
         {
-            const ratio = this.videoElement.currentTime / this.videoElement.duration
-            fillElement.style.transform = `scaleX(${ratio})`
+            const ratio1 = (this.audioElement.currentTime * 360) / this.audioElement.duration
+            const ratio2 = (this.audioElement.currentTime * bounding.width) / this.audioElement.duration
+            secondsElement.style.transform = `rotate(${ratio1}deg)`
+            dragElement.style.transform = `translateX(${ratio2}px)`
+            if(this.isPlaying == true)
+            {
+                currentTElement.textContent = formatTime(this.audioElement.currentTime)
+                durationTElement.textContent = formatTime(this.audioElement.duration)
+            }
+            
+            /* Convert seconds in minutes, (finding on Internet) */
+            function formatTime(seconds)
+            {
+                let minutes = Math.floor(seconds / 60)
+                minutes = (minutes >= 10) ? minutes : "0" + minutes;
+                seconds = Math.floor(seconds % 60)
+                seconds = (seconds >= 10) ? seconds : "0" + seconds
+                return `${minutes} : ${seconds}`
+            }
         })
 
         seekBarElement.addEventListener('click', (_event) => 
         {
-            const bounding = seekBarElement.getBoundingClientRect()
             const ratio = (_event.clientX - bounding.left) / bounding.width
-            const time = ratio * this.videoElement.duration
+            const time = ratio * this.audioElement.duration
 
-            this.videoElement.currentTime = time
+            this.audioElement.currentTime = time
         }) 
 
+        dragElement.addEventListener('mousedown', (_event) => 
+        {
+            isdraged = true
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+            dragElement.style.transform = `translateX(${ratio}px)`
+        }) 
+
+        dragElement.addEventListener('mousemove', (_event) => 
+        {
+            if (isdraged == true)
+            {
+                const ratio = (_event.clientX - bounding.left) / bounding.width
+            }   
+        }) 
+
+        dragElement.addEventListener('mouseup', (_event) =>
+        {
+            if (isdraged == true) 
+            {
+                const ratio = (_event.clientX - bounding.left) / bounding.width
+                dragElement.style.transform = `translateX(${ratio}px)`
+                const time = ratio * this.audioElement.duration
+                this.audioElement.currentTime = time
+                isdraged = false
+            }
+        })
     }
-    */
-
-
 }
 
 const jukeBox = new JukeBox(document.querySelector('.js-main'))
