@@ -6,19 +6,15 @@ Sorry, there is no responsive, please use a computer.
 
 ## Features
 
-You can make your own coffee by :
-- Choosing a size cup
-- Writing your name on the strip
-- Choosing your coffee flavor
-- Selecting how many sugar you want
+You can listen some chill hip hop music by :
+- Clicking on the green button of the jukebox
+- Going to the next/previous song, using vinyles
+- Selecting the volume (hover the equalizer)
+- Moving on the track (hover the clock and click on the seek bar or drag the dot)
 
-You can see the composition of your coffee.
+You can see the cover of the music. 
 
-You can listen some music : 
-- clicking on play button
-- there is one song
-
-There is also some sound effects.
+There is also a coin sound effect.
 
 ## Online WebSite
 
