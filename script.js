@@ -240,6 +240,7 @@ class JukeBox
             if (isdraged == true)
             {
                 const ratio = (_event.clientX - bounding.left) / bounding.width
+                dragElement.style.transform = `translateX(${ratio}px)`
             }   
         }) 
 
